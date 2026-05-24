@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anomaly-api
+  namespace: anomaly-detection
+  lables:
+    app: anomaly-api
+spec: 
+  replicas: 2
+  selector:
+    matchLabels:
+      app: anomaly-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+  template:
+    metadata: 
+      labels:
+        app: anomaly-api
+    spec:
+      containers: 
+        - name: anomaly-api
+          image: lightarchivist/network-anomaly-detection:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8089
+          env:
+            - name: MLFLOW_TRACKING_URI
+              value: "http://host.docker.internal:5555"
+            - name: MODEL_NAME
+              value: "network-anomaly-svm"
+            - name: MODEL_STAGE
+              value: "Production"
+            - name: PORT
+              value: "8089"

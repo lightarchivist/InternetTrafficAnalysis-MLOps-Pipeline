@@ -1,0 +1,40 @@
+name: CI - Train and evaluate model
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'requirements.txt'
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Train model and log to MLflow
+        env:
+          MLFLOW_TRACKING_URI: http://localhost:5555
+        run: |
+          cd src
+          python train.py \
+            --data-dir ../data \
+            --experiment-name network-anomaly-detection \
+            --model-name network-anomaly-svm \
+            --promote \
+            --promote-f1-threshold 0.90
+
+      - name: Upload training logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-logs
+          path: src/*.log
+          if-no-files-found: ignore

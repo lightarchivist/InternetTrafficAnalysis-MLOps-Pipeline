@@ -3,4 +3,7 @@
 *.doc
 *.docx
 
+# igonre all data except for the demo pcap csv
 
+data/
+!data/pcap_demo.csv
