@@ -27,7 +27,7 @@ spec:
             - containerPort: 8089
           env:
             - name: MLFLOW_TRACKING_URI
-              value: "http://host.docker.internal:5555"
+              value: "http://192.168.0.8:5555"
             - name: MODEL_NAME
               value: "network-anomaly-svm"
             - name: MODEL_STAGE
