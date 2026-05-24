@@ -31,10 +31,8 @@ jobs:
           DATA_DIR: data/train
           EXPERIMENT_NAME: network-anomaly-detection
           MODEL_NAME: network-anomaly-svm
-        run: |
-          source venv/bin/activate
-          cd src
-          python train.py
+        run:
+          venv/bin/python src/train.py
 
       - name: Upload training logs
         uses: actions/upload-artifact@v4

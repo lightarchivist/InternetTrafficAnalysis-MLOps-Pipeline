@@ -7,6 +7,7 @@ RUN pip install -r requirements.txt
 
 COPY src/app.py   ./app.py
 COPY main.py      ./main.py
+COPY models/      ./models/
 
 ENV MLFLOW_TRACKING_URI=http://192.168.0.8:5555
 ENV MODEL_NAME=network-anomaly-svm
